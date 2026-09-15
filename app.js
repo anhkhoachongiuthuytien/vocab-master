@@ -1227,7 +1227,7 @@
     canvas.height = window.innerHeight;
 
     const pieces = [];
-    const colors = ['#0064d2', '#10b981', '#f59e0b', '#7c3aed', '#ec4899', '#06b6d4'];
+    const colors = ['#ff2a5f', '#ff7a00', '#ffd200', '#00e676', '#00e5ff', '#3d5afe', '#d500f9'];
     for (let i = 0; i < 100; i++) {
       pieces.push({
         x: Math.random() * canvas.width,
