@@ -182,7 +182,7 @@
       const savedRate = localStorage.getItem('vm_voice_rate');
       if (savedRate) state.voiceRate = parseFloat(savedRate);
 
-      const savedTheme = localStorage.getItem('vm_theme') || 'light';
+      const savedTheme = localStorage.getItem('vm_theme') || 'dark';
       document.documentElement.setAttribute('data-theme', savedTheme);
 
       // Streak tracking
@@ -1278,7 +1278,7 @@
     const themeBtn = document.getElementById('themeToggleBtn');
     if (themeBtn) {
       themeBtn.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
         const next = current === 'light' ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('vm_theme', next);
