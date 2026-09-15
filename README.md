@@ -9,18 +9,22 @@
 
 ---
 
-## ✨ Tính Năng Nổi Bật
+## 🌟 Tính Năng Nổi Bật
 
-- 🗂️ **50 Chủ Đề - 1046 Từ Vựng**: Phân loại theo các nhóm chủ đề thực tế: Đời sống, Ẩm thực, Tâm lý, Thiên nhiên, Thời trang, Nghề nghiệp, Sức khỏe, Giáo dục, v.v.
-- 🗣️ **Phát Âm Chuẩn Quốc Tế**: Tích hợp Web Speech API (US/UK) với tùy chỉnh tốc độ đọc (0.8x - 1.2x).
-- 🃏 **Thẻ Ghi Nhớ 3D (Flashcards)**: Lật thẻ mượt mà, hỗ trợ phím tắt (`Space` để lật, `← / →` để chuyển thẻ), đánh dấu "Đã thuộc" hoặc "Cần ôn lại".
-- ✍️ **Trắc Nghiệm Tương Tác (Quiz)**: 4 lựa chọn với hệ thống tính điểm, chuỗi combo liên tiếp và âm thanh phản hồi trực quan.
-- 🎧 **Luyện Nghe (Listening Challenge)**: Phát âm từ vựng và chọn đáp án chính xác để cải thiện khả năng nghe nhận diện.
-- ⌨️ **Gõ Chính Tả (Dictation)**: Luyện gõ từ vựng tiếng Anh theo nghĩa và gợi ý chữ cái.
-- 🧩 **Trò Chơi Ghép Từ (Word Match Game)**: Nối nhanh 16 thẻ từ vựng và nghĩa tiếng Việt với đồng hồ tính giờ.
-- ⭐ **Sổ Tay Từ Khó (Starred Notebook)**: Lưu lại các từ vựng bạn hay quên để ôn tập chuyên sâu.
-- 🌙 **Giao Diện Sáng / Tối (Light & Dark Theme)**: Thiết kế Glassmorphism hiện đại, tối ưu trên cả máy tính và điện thoại.
-- 💾 **Lưu Tiến Độ Tự Động**: Toàn bộ dữ liệu học tập được lưu tự động trên trình duyệt (`localStorage`).
+- **Giao Diện Trắng Sáng Cao Cấp (eBay & Quizlet Style)**: Nền trắng tinh khôi tương phản tự nhiên, thanh lịch, dễ đọc, không màu mè giả tạo.
+- **Hệ Thống Vector SVG Chuyên Nghiệp**: 100% biểu tượng nét mảnh độc quyền (`icons.js`), không dùng emoji.
+- **50 Chủ Đề - 1046 Từ Vựng Thực Tế**: Phân loại theo các nhóm chủ đề đời sống, ẩm thực, tâm lý, thiên nhiên, thời trang, nghề nghiệp, sức khỏe, giáo dục...
+- **Widget Thẻ Tương Tác Trực Tiếp (Hero Card)**: Lật thẻ, nghe phát âm và đổi từ ngẫu nhiên ngay tại trang chủ.
+- **Phát Âm Bản Xứ (Web Speech API)**: Tùy chỉnh giọng Anh - Mỹ, Anh - Anh và tốc độ đọc linh hoạt (0.5x - 1.3x).
+- **Thẻ Ghi Nhớ 3D (Flashcards)**: Lật thẻ mượt mà, hỗ trợ phím tắt (`Space` để lật, `← / →` để chuyển thẻ), đánh dấu "Đã thuộc" hoặc "Cần ôn lại".
+- **Trắc Nghiệm Tương Tác (Quiz)**: 4 lựa chọn với hệ thống tính điểm, chuỗi combo liên tiếp và âm thanh phản hồi trực quan.
+- **Luyện Nghe (Listening Challenge)**: Phát âm từ vựng và chọn đáp án chính xác để cải thiện khả năng nghe nhận diện.
+- **Gõ Chính Tả (Dictation)**: Luyện gõ từ vựng tiếng Anh theo nghĩa và gợi ý chữ cái.
+- **Trò Chơi Ghép Từ (Word Match Game)**: Nối nhanh các cặp thẻ từ vựng và nghĩa tiếng Việt với đồng hồ tính giờ và lượt bấm.
+- **Bảng Tra Cứu Toàn Diện (Word Explorer)**: Xem danh sách từ có sẵn kèm nút nghe phát âm và đánh dấu nhanh.
+- **Sổ Tay Từ Khó (Starred Notebook)**: Lưu lại các từ vựng bạn hay quên để ôn tập chuyên sâu.
+- **Đồng Bộ & Sao Lưu Đa Thiết Bị (Backup & Sync)**: Xuất/nhập file JSON hoặc mã đồng bộ để chuyển tiến trình giữa điện thoại và máy tính dễ dàng.
+- **Chế Độ Giao Diện Sáng / Tối**: Tùy chỉnh Light/Dark theme theo sở thích.
 
 ---
 
