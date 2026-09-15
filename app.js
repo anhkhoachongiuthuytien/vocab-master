@@ -1002,6 +1002,111 @@
   }
 
   // ==========================================================================
+  // BACKUP & SYNC (CROSS-DEVICE PROGRESS)
+  // ==========================================================================
+  function openBackupModal() {
+    const modal = document.getElementById('backupModal');
+    if (modal) modal.style.display = 'flex';
+  }
+
+  function closeBackupModal() {
+    const modal = document.getElementById('backupModal');
+    if (modal) modal.style.display = 'none';
+  }
+
+  function exportBackupData() {
+    return {
+      version: 1,
+      exportDate: new Date().toISOString(),
+      learnedWords: Array.from(state.learnedWords),
+      starredWords: Array.from(state.starredWords),
+      streak: state.streak
+    };
+  }
+
+  function downloadBackupJson() {
+    const data = exportBackupData();
+    const jsonStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `vocab_backup_${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function copyBackupCode() {
+    const data = exportBackupData();
+    const str = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    navigator.clipboard.writeText(str).then(() => {
+      alert('📋 Đã sao chép mã sao lưu vào bộ nhớ tạm! Bạn hãy gửi mã này sang thiết bị mới để dán vào nhé.');
+    }).catch(() => {
+      const input = document.getElementById('backupCodeInput');
+      if (input) input.value = str;
+      alert('Hãy sao chép đoạn mã trong ô bên dưới nhé!');
+    });
+  }
+
+  function applyRestoreData(dataObj) {
+    if (!dataObj || !dataObj.learnedWords) {
+      alert('❌ Định dạng dữ liệu không hợp lệ!');
+      return false;
+    }
+    // Merge or replace
+    dataObj.learnedWords.forEach(id => state.learnedWords.add(id));
+    if (dataObj.starredWords) {
+      dataObj.starredWords.forEach(id => state.starredWords.add(id));
+    }
+    if (dataObj.streak && dataObj.streak > state.streak) {
+      state.streak = dataObj.streak;
+    }
+    saveStoredData();
+    updateGlobalStats();
+    renderTopics();
+    triggerConfetti();
+    alert(`🎉 Đồng bộ thành công! Hiện bạn đã có ${state.learnedWords.size} từ đã thuộc và ${state.starredWords.size} từ trong sổ tay!`);
+    closeBackupModal();
+    return true;
+  }
+
+  function restoreFromCode() {
+    const input = document.getElementById('backupCodeInput');
+    const val = (input ? input.value : '').trim();
+    if (!val) {
+      alert('Vui lòng dán mã sao lưu hoặc chọn file .json!');
+      return;
+    }
+    try {
+      let parsed = null;
+      if (val.startsWith('{')) {
+        parsed = JSON.parse(val);
+      } else {
+        const decoded = decodeURIComponent(escape(atob(val)));
+        parsed = JSON.parse(decoded);
+      }
+      applyRestoreData(parsed);
+    } catch (e) {
+      alert('❌ Mã sao lưu không đúng định dạng!');
+    }
+  }
+
+  function resetAllProgress() {
+    if (confirm('⚠️ Bạn có chắc chắn muốn xóa toàn bộ tiến trình học trên máy này để bắt đầu lại từ đầu không?')) {
+      state.learnedWords.clear();
+      state.starredWords.clear();
+      state.streak = 1;
+      saveStoredData();
+      updateGlobalStats();
+      renderTopics();
+      alert('Đã đặt lại tiến độ học tập về 0!');
+      closeBackupModal();
+    }
+  }
+
+  // ==========================================================================
   // CONFETTI CELEBRATION
   // ==========================================================================
   function triggerConfetti() {
@@ -1236,6 +1341,43 @@
 
     const btnCloseStarredModal = document.getElementById('btnCloseStarredModal');
     if (btnCloseStarredModal) btnCloseStarredModal.addEventListener('click', closeStarredModal);
+
+    // Backup & Sync Modal Events
+    const syncModalBtn = document.getElementById('syncModalBtn');
+    if (syncModalBtn) syncModalBtn.addEventListener('click', openBackupModal);
+
+    const btnCloseBackupModal = document.getElementById('btnCloseBackupModal');
+    if (btnCloseBackupModal) btnCloseBackupModal.addEventListener('click', closeBackupModal);
+
+    const btnExportJson = document.getElementById('btnExportJson');
+    if (btnExportJson) btnExportJson.addEventListener('click', downloadBackupJson);
+
+    const btnCopyBackupCode = document.getElementById('btnCopyBackupCode');
+    if (btnCopyBackupCode) btnCopyBackupCode.addEventListener('click', copyBackupCode);
+
+    const btnApplyBackupCode = document.getElementById('btnApplyBackupCode');
+    if (btnApplyBackupCode) btnApplyBackupCode.addEventListener('click', restoreFromCode);
+
+    const btnResetProgress = document.getElementById('btnResetProgress');
+    if (btnResetProgress) btnResetProgress.addEventListener('click', resetAllProgress);
+
+    const importFileInput = document.getElementById('importFileInput');
+    if (importFileInput) {
+      importFileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const dataObj = JSON.parse(event.target.result);
+            applyRestoreData(dataObj);
+          } catch (err) {
+            alert('❌ File JSON không hợp lệ!');
+          }
+        };
+        reader.readAsText(file);
+      });
+    }
   }
 
   // Startup

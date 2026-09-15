@@ -74,6 +74,11 @@
           </div>
         </div>
 
+        <!-- Sync / Backup Button -->
+        <button class="icon-btn" id="syncModalBtn" title="Sao lưu & Đồng bộ tiến độ sang máy khác">
+          💾
+        </button>
+
         <!-- Dark / Light Mode Toggle -->
         <button class="icon-btn" id="themeToggleBtn" title="Chuyển đổi giao diện Sáng / Tối">
           🌙
@@ -374,6 +379,61 @@
         <button class="icon-btn" id="btnCloseStarredModal" style="border: none;">✕</button>
       </div>
       <div class="modal-body" id="starredModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Backup & Sync Modal -->
+  <div class="modal-overlay" id="backupModal">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 style="font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
+          💾 Sao Lưu & Đồng Bộ Tiến Độ Học
+        </h3>
+        <button class="icon-btn" id="btnCloseBackupModal" style="border: none;">✕</button>
+      </div>
+      <div class="modal-body" style="gap: 1.25rem;">
+        <div style="background: var(--bg-surface-subtle); border-radius: 1rem; padding: 1rem 1.25rem; border: 1px solid var(--border-subtle); font-size: 0.9rem; line-height: 1.6; color: var(--text-secondary);">
+          💡 <strong>Cách lưu giữa các máy khác nhau:</strong> Tiến trình học của bạn được lưu độc lập trên từng máy. Để chuyển dữ liệu từ điện thoại sang máy tính (hoặc ngược lại), bạn chỉ cần <strong>Sao chép mã sao lưu</strong> từ máy cũ và <strong>Dán vào máy mới</strong>!
+        </div>
+
+        <div>
+          <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;">1. Xuất dữ liệu (Từ máy này)</h4>
+          <div style="display: flex; gap: 0.75rem;">
+            <button class="quick-action-btn btn-primary-action" id="btnExportJson" style="flex: 1; justify-content: center; font-size: 0.9rem;">
+              📥 Tải file sao lưu (.json)
+            </button>
+            <button class="quick-action-btn btn-secondary-action" id="btnCopyBackupCode" style="flex: 1; justify-content: center; font-size: 0.9rem;">
+              📋 Sao chép mã
+            </button>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+          <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;">2. Nhập dữ liệu (Vào máy mới)</h4>
+          <textarea 
+            id="backupCodeInput" 
+            placeholder="Dán mã sao lưu vào đây..."
+            style="width: 100%; height: 80px; padding: 0.75rem; border-radius: 0.75rem; background: var(--bg-surface-subtle); border: 1px solid var(--border-subtle); color: var(--text-primary); font-family: var(--font-mono); font-size: 0.85rem; resize: none; margin-bottom: 0.75rem;"
+          ></textarea>
+          
+          <div style="display: flex; gap: 0.75rem;">
+            <label class="quick-action-btn btn-secondary-action" style="flex: 1; justify-content: center; font-size: 0.9rem; cursor: pointer;">
+              📂 Chọn file .json
+              <input type="file" id="importFileInput" accept=".json" style="display: none;" />
+            </label>
+            <button class="quick-action-btn btn-primary-action" id="btnApplyBackupCode" style="flex: 1; justify-content: center; font-size: 0.9rem;">
+              🔄 Khôi phục ngay
+            </button>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border-subtle); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Muốn học lại từ con số 0?</span>
+          <button id="btnResetProgress" style="background: none; border: none; color: var(--danger); font-weight: 700; font-size: 0.85rem; cursor: pointer;">
+            ⚠️ Xóa tiến độ máy này
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
