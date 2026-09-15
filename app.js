@@ -84,7 +84,7 @@
     }
   }
 
-  function speakText(text) {
+  function speakText(text, triggerEl = null) {
     if (!('speechSynthesis' in window) || !text) return;
     window.speechSynthesis.cancel();
     const clean = text.replace(/[\(\)\/\.\,]/g, ' ').trim();
@@ -92,7 +92,27 @@
     if (state.selectedVoice) utterance.voice = state.selectedVoice;
     utterance.rate = state.voiceRate;
     utterance.pitch = 1.0;
+
+    if (triggerEl) {
+      triggerEl.classList.add('audio-playing');
+      utterance.onend = () => triggerEl.classList.remove('audio-playing');
+      utterance.onerror = () => triggerEl.classList.remove('audio-playing');
+    }
+
     window.speechSynthesis.speak(utterance);
+  }
+
+  function showToast(msg, iconName = 'check') {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast-message';
+    toast.innerHTML = `<span>${icon(iconName)}</span><span>${msg}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.add('toast-exit');
+      setTimeout(() => toast.remove(), 220);
+    }, 2400);
   }
 
   function populateVoiceSelect() {
@@ -397,17 +417,35 @@
       return;
     }
 
+    // Update topics meta badge
+    const badgeEl = document.getElementById('topicsCountBadge');
+    if (badgeEl) {
+      const totalWordsFiltered = filtered.reduce((acc, t) => acc + t.words.length, 0);
+      badgeEl.textContent = `${filtered.length} chủ đề • ${totalWordsFiltered.toLocaleString()} từ`;
+    }
+
     filtered.forEach(t => {
       const learnedInTopic = t.words.filter(w => state.learnedWords.has(w.id)).length;
       const percent = Math.round((learnedInTopic / t.words.length) * 100);
       const svgIcon = icon(t.iconName || 'book');
 
+      let statusBadge = '';
+      if (percent === 100) {
+        statusBadge = `<span class="topic-status-badge completed">${icon('check')} Đã thuộc</span>`;
+      } else if (percent > 0) {
+        statusBadge = `<span class="topic-status-badge in-progress">${percent}%</span>`;
+      }
+
       const card = document.createElement('div');
       card.className = 'topic-card';
+      card.setAttribute('data-cat', t.category);
       card.innerHTML = `
         <div class="topic-card-header">
           <div class="topic-icon-pod">${svgIcon}</div>
-          <span class="topic-index-badge">#${t.id.toString().padStart(2, '0')}</span>
+          <div style="display: flex; align-items: center; gap: 0.4rem;">
+            ${statusBadge}
+            <span class="topic-index-badge">#${t.id.toString().padStart(2, '0')}</span>
+          </div>
         </div>
         <div class="topic-body-content">
           <span class="topic-cat-name">${t.category}</span>
@@ -416,7 +454,10 @@
         <div class="topic-footer-info">
           <div class="topic-meta-row">
             <span>${t.words.length} từ vựng</span>
-            <span>${learnedInTopic}/${t.words.length} (${percent}%)</span>
+            <div class="topic-action-hint">
+              <span>Học ngay</span>
+              <span class="topic-action-arrow">${icon('arrow-right')}</span>
+            </div>
           </div>
           <div class="progress-track-subtle">
             <div class="progress-fill-subtle" style="width: ${percent}%;"></div>
@@ -564,13 +605,14 @@
       saveStoredData();
       updateGlobalStats();
       playChime(true);
+      showToast(`Đã thuộc: "${word.word}"`, 'check');
     }
     if (state.cardIndex < state.cardList.length - 1) {
       state.cardIndex++;
       renderFlashcard();
     } else {
       triggerConfetti();
-      alert(`Chúc mừng bạn đã hoàn thành các thẻ học của chủ đề "${state.currentTopic.title}"!`);
+      showToast(`Chúc mừng! Bạn đã hoàn thành chủ đề "${state.currentTopic.title}"!`, 'graduation');
     }
   }
 
@@ -586,8 +628,10 @@
     const word = state.cardList[state.cardIndex];
     if (state.starredWords.has(word.id)) {
       state.starredWords.delete(word.id);
+      showToast(`Đã bỏ lưu "${word.word}"`, 'star');
     } else {
       state.starredWords.add(word.id);
+      showToast(`Đã lưu "${word.word}" vào sổ tay`, 'star-filled');
     }
     saveStoredData();
     updateGlobalStats();
@@ -1109,11 +1153,11 @@
     const data = exportBackupData();
     const str = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
     navigator.clipboard.writeText(str).then(() => {
-      alert('Đã sao chép mã sao lưu vào bộ nhớ tạm! Bạn hãy gửi mã này sang thiết bị mới để dán vào nhé.');
+      showToast('Đã sao chép mã đồng bộ vào bộ nhớ tạm!', 'save');
     }).catch(() => {
       const input = document.getElementById('backupCodeInput');
       if (input) input.value = str;
-      alert('Hãy sao chép đoạn mã trong ô bên dưới nhé!');
+      showToast('Đã tạo mã sao lưu trong ô nhập!', 'save');
     });
   }
 

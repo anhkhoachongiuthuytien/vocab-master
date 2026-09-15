@@ -87,44 +87,63 @@
     <!-- ==================================================================== -->
     <main id="dashboardView" style="display: flex; flex-direction: column; gap: 2rem;">
       
-      <!-- Clean White Hero Section -->
-      <section class="hero-card" id="heroBanner">
-        <div class="hero-left-column">
-          <div class="hero-tag">
-            <span id="iconGraduationTag"></span>
-            <span>Kho từ vựng chuẩn Cambridge & Oxford</span>
-          </div>
-          
-          <h2 class="hero-heading">
-            Chinh phục <span class="highlight">1000 Từ Vựng</span> tiếng Anh theo 50 chủ đề thực tế.
-          </h2>
-          
-          <p class="hero-desc">
-            Học sâu, nhớ lâu theo phương pháp lặp lại ngắt quãng (Flashcard & Quiz). Đầy đủ phiên âm IPA chuẩn xác, giải nghĩa tiếng Việt chi tiết và giọng đọc bản xứ giúp bạn tự tin giao tiếp.
-          </p>
-
-          <div class="hero-actions-row">
-            <button class="btn-brand-primary" id="btnHeroStart">
-              <span>Bắt đầu học ngay</span>
-              <span id="iconHeroArrow"></span>
-            </button>
-            <button class="btn-brand-outline" id="btnHeroStarred">
-              <span id="iconHeroStar"></span>
-              <span>Sổ tay từ khó (<span id="heroStarredCount">0</span>)</span>
-            </button>
-          </div>
-
-          <!-- Overall Progress Box -->
-          <div class="hero-progress-box">
-            <div class="hero-progress-header">
-              <span>Tiến độ học tập tổng thể</span>
-              <span id="heroMasteryPercent">0% (0 / 1046 từ)</span>
+      <!-- Clean White Hero Section with Double-Bezel Architecture -->
+      <div class="hero-bezel-shell">
+        <section class="hero-card" id="heroBanner">
+          <div class="hero-left-column">
+            <div class="hero-tag">
+              <span id="iconGraduationTag"></span>
+              <span>Kho từ vựng chuẩn Cambridge & Oxford</span>
             </div>
-            <div class="progress-track-clean">
-              <div class="progress-bar-clean" id="heroProgressBar" style="width: 0%;"></div>
+            
+            <h2 class="hero-heading">
+              Chinh phục <span class="highlight">1000 Từ Vựng</span> tiếng Anh theo 50 chủ đề thực tế.
+            </h2>
+            
+            <p class="hero-desc">
+              Học sâu, nhớ lâu theo phương pháp lặp lại ngắt quãng (Flashcard & Quiz). Đầy đủ phiên âm IPA chuẩn xác, giải nghĩa tiếng Việt chi tiết và giọng đọc bản xứ giúp bạn tự tin giao tiếp.
+            </p>
+
+            <!-- Micro-metrics Proof Bar -->
+            <div class="hero-stats-proof-grid">
+              <div class="proof-metric-item">
+                <strong class="proof-num">50</strong>
+                <span class="proof-label">Chủ đề thực tế</span>
+              </div>
+              <div class="proof-metric-divider"></div>
+              <div class="proof-metric-item">
+                <strong class="proof-num">1,046</strong>
+                <span class="proof-label">Từ vựng IPA</span>
+              </div>
+              <div class="proof-metric-divider"></div>
+              <div class="proof-metric-item">
+                <strong class="proof-num">6</strong>
+                <span class="proof-label">Chế độ luyện tập</span>
+              </div>
+            </div>
+
+            <div class="hero-actions-row">
+              <button class="btn-brand-primary group-hover-btn" id="btnHeroStart">
+                <span>Bắt đầu học ngay</span>
+                <span class="btn-trailing-icon-pod" id="iconHeroArrow"></span>
+              </button>
+              <button class="btn-brand-outline" id="btnHeroStarred">
+                <span id="iconHeroStar"></span>
+                <span>Sổ tay từ khó (<span id="heroStarredCount">0</span>)</span>
+              </button>
+            </div>
+
+            <!-- Overall Progress Box -->
+            <div class="hero-progress-box">
+              <div class="hero-progress-header">
+                <span>Tiến độ học tập tổng thể</span>
+                <span id="heroMasteryPercent">0% (0 / 1046 từ)</span>
+              </div>
+              <div class="progress-track-clean">
+                <div class="progress-bar-clean" id="heroProgressBar" style="width: 0%;"></div>
+              </div>
             </div>
           </div>
-        </div>
 
         <!-- Hero Right: Live Interactive Card Widget -->
         <div class="hero-card-preview">
@@ -155,6 +174,7 @@
           </div>
         </div>
       </section>
+    </div>
 
       <!-- Search & Category Filters (eBay / Quizlet Style) -->
       <section class="controls-wrap" id="controlsBar">
@@ -174,6 +194,17 @@
         <!-- Horizontal Scrolling Category Filter Pills -->
         <nav class="category-tabs-row" id="categoryScroll"></nav>
       </section>
+
+      <!-- Topics Directory Meta Bar -->
+      <div class="topics-meta-bar">
+        <div class="topics-meta-left">
+          <span class="topics-meta-title">Danh sách chủ đề từ vựng</span>
+          <span class="topics-meta-badge" id="topicsCountBadge">50 chủ đề • 1,046 từ</span>
+        </div>
+        <div class="topics-meta-right">
+          <span class="topics-meta-hint">Bấm vào bất kỳ chủ đề nào để mở bàn học</span>
+        </div>
+      </div>
 
       <!-- 50 Topics Cards Grid -->
       <section class="topics-grid-container" id="topicsGrid"></section>
@@ -500,6 +531,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
   <!-- Scripts: Icons, Data & Application Logic -->
   <script src="icons.js"></script>
