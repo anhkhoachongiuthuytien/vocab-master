@@ -124,6 +124,18 @@
     if (state.selectedVoice) utterance.voice = state.selectedVoice;
     utterance.rate = state.voiceRate;
     utterance.pitch = 1.0;
+
+    // Trigger visualizer equalizer waves
+    utterance.onstart = () => {
+      document.querySelectorAll('.audio-speaker-pill').forEach(btn => btn.classList.add('speaking'));
+    };
+    utterance.onend = () => {
+      document.querySelectorAll('.audio-speaker-pill').forEach(btn => btn.classList.remove('speaking'));
+    };
+    utterance.onerror = () => {
+      document.querySelectorAll('.audio-speaker-pill').forEach(btn => btn.classList.remove('speaking'));
+    };
+
     window.speechSynthesis.speak(utterance);
   }
 
@@ -220,17 +232,14 @@
     const learnedCount = state.learnedWords.size;
     const learnedPercent = Math.round((learnedCount / totalWordsCount) * 100);
 
-    const elLearned = document.getElementById('statLearnedPill');
-    if (elLearned) elLearned.innerHTML = `<span class="icon">🎯</span> Đã thuộc: <strong>${learnedCount}</strong> <small>/${totalWordsCount} (${learnedPercent}%)</small>`;
+    const elLearned = document.getElementById('headerLearnedVal');
+    if (elLearned) elLearned.textContent = learnedCount;
 
-    const elStarred = document.getElementById('statStarredPill');
-    if (elStarred) elStarred.innerHTML = `<span class="icon">⭐</span> Sổ tay: <strong>${state.starredWords.size}</strong>`;
+    const elStarred = document.getElementById('headerStarredVal');
+    if (elStarred) elStarred.textContent = state.starredWords.size;
 
-    const elStreak = document.getElementById('statStreakPill');
-    if (elStreak) elStreak.innerHTML = `<span class="icon">🔥</span> Chuỗi: <strong>${state.streak}</strong> ngày`;
-
-    const elHeroLearned = document.getElementById('heroLearnedCount');
-    if (elHeroLearned) elHeroLearned.textContent = learnedCount;
+    const elStreak = document.getElementById('headerStreakVal');
+    if (elStreak) elStreak.textContent = state.streak;
 
     const elHeroProgress = document.getElementById('heroMasteryPercent');
     if (elHeroProgress) elHeroProgress.textContent = `${learnedPercent}%`;
@@ -248,15 +257,15 @@
     container.innerHTML = '';
 
     state.categories.forEach(cat => {
-      const pill = document.createElement('button');
-      pill.className = `cat-pill ${cat === state.currentCategory ? 'active' : ''}`;
-      pill.textContent = cat;
-      pill.addEventListener('click', () => {
+      const chip = document.createElement('button');
+      chip.className = `cat-chip ${cat === state.currentCategory ? 'active' : ''}`;
+      chip.textContent = cat;
+      chip.addEventListener('click', () => {
         state.currentCategory = cat;
         renderCategories();
         renderTopics();
       });
-      container.appendChild(pill);
+      container.appendChild(chip);
     });
   }
 
@@ -288,10 +297,10 @@
 
     if (filteredTopics.length === 0) {
       grid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
-          <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
-          <h3>Không tìm thấy chủ đề hoặc từ vựng phù hợp</h3>
-          <p style="margin-top: 0.5rem;">Hãy thử tìm với từ khóa khác hoặc chuyển danh mục về "Tất cả".</p>
+        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
+          <div style="font-size: 3.5rem; margin-bottom: 1rem;">🔍</div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);">Không tìm thấy chủ đề hoặc từ vựng phù hợp</h3>
+          <p style="margin-top: 0.5rem; color: var(--text-secondary);">Hãy thử tìm với từ khóa khác hoặc chuyển danh mục về "Tất cả".</p>
         </div>
       `;
       return;
@@ -302,23 +311,25 @@
       const percent = Math.round((learnedInTopic / t.words.length) * 100);
 
       const card = document.createElement('div');
-      card.className = 'topic-card';
+      card.className = 'bezel-shell topic-bezel-card';
       card.innerHTML = `
-        <div class="topic-card-top">
-          <div class="topic-icon-wrap">${t.icon}</div>
-          <span class="topic-id-badge">#${t.id.toString().padStart(2, '0')}</span>
-        </div>
-        <div class="topic-card-content">
-          <span class="topic-card-category">${t.category}</span>
-          <h3 class="topic-card-title">${t.title}</h3>
-        </div>
-        <div class="topic-card-footer">
-          <div class="topic-progress-info">
-            <span>${t.words.length} từ vựng</span>
-            <span>${learnedInTopic}/${t.words.length} (${percent}%)</span>
+        <div class="bezel-core topic-card-body">
+          <div class="topic-header-row">
+            <div class="topic-icon-pod">${t.icon}</div>
+            <span class="topic-id-tag">#${t.id.toString().padStart(2, '0')}</span>
           </div>
-          <div class="progress-track">
-            <div class="progress-fill" style="width: ${percent}%;"></div>
+          <div class="topic-meta-col">
+            <span class="topic-tag-category">${t.category}</span>
+            <h3 class="topic-card-name">${t.title}</h3>
+          </div>
+          <div class="topic-footer-section">
+            <div class="topic-progress-text">
+              <span>${t.words.length} từ vựng</span>
+              <span>${learnedInTopic}/${t.words.length} (${percent}%)</span>
+            </div>
+            <div class="progress-track-sleek">
+              <div class="progress-fill-sleek" style="width: ${percent}%;"></div>
+            </div>
           </div>
         </div>
       `;
@@ -1254,8 +1265,8 @@
     const cardEl = document.getElementById('flashcardElement');
     if (cardEl) {
       cardEl.addEventListener('click', (e) => {
-        // don't flip if star button or audio button clicked
-        if (e.target.closest('.card-star-btn') || e.target.closest('.audio-btn-large')) return;
+        // don't flip if star button or audio speaker button clicked
+        if (e.target.closest('.card-star-btn') || e.target.closest('.audio-speaker-pill') || e.target.closest('.audio-btn-large')) return;
         toggleFlipCard();
       });
     }
@@ -1289,8 +1300,19 @@
     });
     if (btnCardEasy) btnCardEasy.addEventListener('click', () => nextCard(true));
 
-    // Keyboard shortcuts
+    // Global Keyboard shortcuts
     window.addEventListener('keydown', (e) => {
+      // Quick search shortcut Ctrl+K or Cmd+K
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const searchInput = document.getElementById('vocabSearchInput');
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+        return;
+      }
+
       if (state.currentTopic && state.currentMode === 'flashcards') {
         if (e.code === 'Space') {
           e.preventDefault();
