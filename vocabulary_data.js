@@ -7,19 +7,18 @@
 window.VOCAB_CATEGORIES = [
   "Tất cả",
   "Đời sống & Gia đình",
-  "Ẩm thực & Đồ uống",
+  "Ẩm thực & Ăn uống",
   "Tâm lý & Tính cách",
   "Thiên nhiên & Môi trường",
-  "Thời trang & Làm đẹp",
+  "Thời trang & Mua sắm",
   "Du lịch & Giao thông",
   "Giải trí & Sở thích",
   "Thể thao & Hoạt động",
   "Giáo dục & Tri thức",
-  "Nghề nghiệp & Công việc",
+  "Nghề nghiệp & Công sở",
   "Sức khỏe & Y tế",
   "Lễ hội & Văn hóa",
-  "Khoa học & Nghệ thuật",
-  "Đô thị & Quốc gia"
+  "Đô thị & Quốc tế"
 ];
 
 window.VOCABULARY_DATA = [
@@ -317,7 +316,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Đời sống & Gia đình",
-    "icon": "👨‍👩‍👧‍👦",
+    "iconName": "users",
     "title": "Gia đình"
   },
   {
@@ -565,8 +564,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Quần áo"
       }
     ],
-    "category": "Thời trang & Làm đẹp",
-    "icon": "👕",
+    "category": "Thời trang & Mua sắm",
+    "iconName": "shirt",
     "title": "Quần áo"
   },
   {
@@ -775,7 +774,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Thiên nhiên & Môi trường",
-    "icon": "🌍",
+    "iconName": "globe",
     "title": "Môi trường"
   },
   {
@@ -1080,7 +1079,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Tâm lý & Tính cách",
-    "icon": "🧠",
+    "iconName": "brain",
     "title": "Tính cách"
   },
   {
@@ -1241,7 +1240,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Tâm lý & Tính cách",
-    "icon": "😊",
+    "iconName": "smile",
     "title": "Cảm xúc"
   },
   {
@@ -1442,7 +1441,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Đời sống & Gia đình",
-    "icon": "🤝",
+    "iconName": "users",
     "title": "Mối quan hệ"
   },
   {
@@ -1611,7 +1610,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Tâm lý & Tính cách",
-    "icon": "💖",
+    "iconName": "heart",
     "title": "Tình yêu"
   },
   {
@@ -1779,8 +1778,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Đồ ăn"
       }
     ],
-    "category": "Ẩm thực & Đồ uống",
-    "icon": "🍲",
+    "category": "Ẩm thực & Ăn uống",
+    "iconName": "utensils",
     "title": "Đồ ăn"
   },
   {
@@ -1948,8 +1947,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Đồ uống"
       }
     ],
-    "category": "Ẩm thực & Đồ uống",
-    "icon": "🍹",
+    "category": "Ẩm thực & Ăn uống",
+    "iconName": "coffee",
     "title": "Đồ uống"
   },
   {
@@ -2117,8 +2116,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Trái cây"
       }
     ],
-    "category": "Ẩm thực & Đồ uống",
-    "icon": "🍎",
+    "category": "Ẩm thực & Ăn uống",
+    "iconName": "apple",
     "title": "Trái cây"
   },
   {
@@ -2286,8 +2285,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Rau củ quả"
       }
     ],
-    "category": "Ẩm thực & Đồ uống",
-    "icon": "🥦",
+    "category": "Ẩm thực & Ăn uống",
+    "iconName": "leaf",
     "title": "Rau củ quả"
   },
   {
@@ -2455,8 +2454,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Tên các loại hải sản"
       }
     ],
-    "category": "Ẩm thực & Đồ uống",
-    "icon": "🦐",
+    "category": "Ẩm thực & Ăn uống",
+    "iconName": "fish",
     "title": "Tên các loại hải sản"
   },
   {
@@ -2624,8 +2623,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Tên các món ăn Việt Nam"
       }
     ],
-    "category": "Ẩm thực & Đồ uống",
-    "icon": "🍜",
+    "category": "Ẩm thực & Ăn uống",
+    "iconName": "soup",
     "title": "Tên các món ăn Việt Nam"
   },
   {
@@ -2793,8 +2792,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Nấu ăn"
       }
     ],
-    "category": "Ẩm thực & Đồ uống",
-    "icon": "🍳",
+    "category": "Ẩm thực & Ăn uống",
+    "iconName": "utensils",
     "title": "Nấu ăn"
   },
   {
@@ -2963,7 +2962,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Giải trí & Sở thích",
-    "icon": "🎨",
+    "iconName": "palette",
     "title": "Sở thích"
   },
   {
@@ -3132,7 +3131,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Giải trí & Sở thích",
-    "icon": "🎵",
+    "iconName": "music",
     "title": "Âm nhạc"
   },
   {
@@ -3300,8 +3299,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Shopping"
       }
     ],
-    "category": "Thời trang & Làm đẹp",
-    "icon": "🛍️",
+    "category": "Thời trang & Mua sắm",
+    "iconName": "shopping-bag",
     "title": "Shopping"
   },
   {
@@ -3470,7 +3469,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Du lịch & Giao thông",
-    "icon": "✈️",
+    "iconName": "plane",
     "title": "Du lịch"
   },
   {
@@ -3639,7 +3638,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Giải trí & Sở thích",
-    "icon": "📷",
+    "iconName": "camera",
     "title": "Chụp ảnh"
   },
   {
@@ -3808,7 +3807,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Giải trí & Sở thích",
-    "icon": "🎪",
+    "iconName": "film",
     "title": "Giải trí"
   },
   {
@@ -3977,7 +3976,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Giải trí & Sở thích",
-    "icon": "🎬",
+    "iconName": "film",
     "title": "Các thể loại phim"
   },
   {
@@ -4146,7 +4145,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Giáo dục & Tri thức",
-    "icon": "📚",
+    "iconName": "book",
     "title": "Các thể loại sách"
   },
   {
@@ -4314,8 +4313,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Làm đẹp"
       }
     ],
-    "category": "Thời trang & Làm đẹp",
-    "icon": "💄",
+    "category": "Thời trang & Mua sắm",
+    "iconName": "sparkles",
     "title": "Làm đẹp"
   },
   {
@@ -4484,7 +4483,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Thể thao & Hoạt động",
-    "icon": "🏅",
+    "iconName": "trophy",
     "title": "Các môn thể thao"
   },
   {
@@ -4653,7 +4652,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Thể thao & Hoạt động",
-    "icon": "⚽",
+    "iconName": "target",
     "title": "Bóng đá"
   },
   {
@@ -4822,7 +4821,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Đời sống & Gia đình",
-    "icon": "🏠",
+    "iconName": "home",
     "title": "Nhà cửa"
   },
   {
@@ -4991,7 +4990,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Đời sống & Gia đình",
-    "icon": "🍳",
+    "iconName": "flame",
     "title": "Nhà bếp"
   },
   {
@@ -5160,7 +5159,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Lễ hội & Văn hóa",
-    "icon": "🧧",
+    "iconName": "gift",
     "title": "Tết"
   },
   {
@@ -5329,7 +5328,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Đời sống & Gia đình",
-    "icon": "☕",
+    "iconName": "coffee",
     "title": "Đời sống"
   },
   {
@@ -5498,7 +5497,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Thiên nhiên & Môi trường",
-    "icon": "🐾",
+    "iconName": "paw",
     "title": "Con vật"
   },
   {
@@ -5667,7 +5666,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Thiên nhiên & Môi trường",
-    "icon": "🌸",
+    "iconName": "flower",
     "title": "Hoa"
   },
   {
@@ -5836,7 +5835,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Lễ hội & Văn hóa",
-    "icon": "🎄",
+    "iconName": "gift",
     "title": "Giáng sinh"
   },
   {
@@ -5996,8 +5995,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Màu sắc"
       }
     ],
-    "category": "Khoa học & Nghệ thuật",
-    "icon": "🎨",
+    "category": "Giải trí & Sở thích",
+    "iconName": "palette",
     "title": "Màu sắc"
   },
   {
@@ -6166,7 +6165,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Du lịch & Giao thông",
-    "icon": "🚗",
+    "iconName": "car",
     "title": "Phương tiện giao thông"
   },
   {
@@ -6335,7 +6334,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Du lịch & Giao thông",
-    "icon": "🚸",
+    "iconName": "alert",
     "title": "Biển báo giao thông"
   },
   {
@@ -6503,8 +6502,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Các nghề nghiệp"
       }
     ],
-    "category": "Nghề nghiệp & Công việc",
-    "icon": "💼",
+    "category": "Nghề nghiệp & Công sở",
+    "iconName": "briefcase",
     "title": "Các nghề nghiệp"
   },
   {
@@ -6673,7 +6672,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Sức khỏe & Y tế",
-    "icon": "🩺",
+    "iconName": "activity",
     "title": "Sức khỏe"
   },
   {
@@ -6842,7 +6841,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Sức khỏe & Y tế",
-    "icon": "🩹",
+    "iconName": "pill",
     "title": "Các loại bệnh"
   },
   {
@@ -7011,7 +7010,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Giáo dục & Tri thức",
-    "icon": "🎓",
+    "iconName": "graduation",
     "title": "Giáo dục"
   },
   {
@@ -7180,7 +7179,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Giáo dục & Tri thức",
-    "icon": "📐",
+    "iconName": "book",
     "title": "Các môn học"
   },
   {
@@ -7340,8 +7339,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Kỹ năng"
       }
     ],
-    "category": "Nghề nghiệp & Công việc",
-    "icon": "💡",
+    "category": "Nghề nghiệp & Công sở",
+    "iconName": "brain",
     "title": "Kỹ năng"
   },
   {
@@ -7486,7 +7485,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Lễ hội & Văn hóa",
-    "icon": "🏮",
+    "iconName": "lantern",
     "title": "Các lễ hội ở Việt Nam"
   },
   {
@@ -7655,7 +7654,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Lễ hội & Văn hóa",
-    "icon": "🥮",
+    "iconName": "lantern",
     "title": "Tết trung thu"
   },
   {
@@ -7824,7 +7823,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Thể thao & Hoạt động",
-    "icon": "🪁",
+    "iconName": "flag",
     "title": "Trò chơi dân gian"
   },
   {
@@ -7993,7 +7992,7 @@ window.VOCABULARY_DATA = [
       }
     ],
     "category": "Lễ hội & Văn hóa",
-    "icon": "🏛️",
+    "iconName": "landmark",
     "title": "Văn hóa"
   },
   {
@@ -8161,8 +8160,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Nghệ thuật"
       }
     ],
-    "category": "Khoa học & Nghệ thuật",
-    "icon": "🎭",
+    "category": "Giải trí & Sở thích",
+    "iconName": "palette",
     "title": "Nghệ thuật"
   },
   {
@@ -8330,8 +8329,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Kinh doanh"
       }
     ],
-    "category": "Nghề nghiệp & Công việc",
-    "icon": "📈",
+    "category": "Nghề nghiệp & Công sở",
+    "iconName": "briefcase",
     "title": "Kinh doanh"
   },
   {
@@ -8499,8 +8498,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Thành phố"
       }
     ],
-    "category": "Đô thị & Quốc gia",
-    "icon": "🏙️",
+    "category": "Đô thị & Quốc tế",
+    "iconName": "building",
     "title": "Thành phố"
   },
   {
@@ -8668,8 +8667,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Tên các nước"
       }
     ],
-    "category": "Đô thị & Quốc gia",
-    "icon": "🌐",
+    "category": "Đô thị & Quốc tế",
+    "iconName": "globe",
     "title": "Tên các nước"
   },
   {
@@ -8837,8 +8836,8 @@ window.VOCABULARY_DATA = [
         "topicName": "Đời sống công sở"
       }
     ],
-    "category": "Nghề nghiệp & Công việc",
-    "icon": "🏢",
+    "category": "Nghề nghiệp & Công sở",
+    "iconName": "building",
     "title": "Đời sống công sở"
   }
 ];
