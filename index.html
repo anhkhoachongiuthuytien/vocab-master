@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VocabMaster - Học 1000 Từ Vựng Tiếng Anh Theo Chủ Đề</title>
+  <meta name="description" content="Ứng dụng học 1000 từ vựng tiếng Anh theo 50 chủ đề thông dụng nhất. Tích hợp Flashcard 3D, Trắc nghiệm, Luyện nghe, Gõ chính tả và Trò chơi nối từ.">
+  
+  <!-- Favicon / Logo -->
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Light Effects -->
+  <div class="bg-glow-container">
+    <div class="glow-circle glow-1"></div>
+    <div class="glow-circle glow-2"></div>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+
+    <!-- Header Navigation -->
+    <header class="site-header" id="mainHeader">
+      <div class="brand-section" id="brandSection" title="Về trang chủ">
+        <div class="brand-logo-wrap">
+          <img src="assets/logo.jpg" alt="VocabMaster Logo">
+        </div>
+        <div class="brand-info">
+          <h1>VocabMaster <span>1000 Từ Vựng</span></h1>
+          <span>Theo 50 Chủ Đề Thông Dụng</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="stat-pill" id="statLearnedPill" title="Số từ vựng bạn đã đánh dấu thuộc">
+          <span class="icon">🎯</span> Đã thuộc: <strong>0</strong> <small>/1046 (0%)</small>
+        </div>
+
+        <div class="stat-pill" id="statStarredPill" style="cursor: pointer;" title="Xem sổ tay từ khó">
+          <span class="icon">⭐</span> Sổ tay: <strong>0</strong>
+        </div>
+
+        <div class="stat-pill" id="statStreakPill" title="Chuỗi ngày học tập">
+          <span class="icon">🔥</span> Chuỗi: <strong>1</strong> ngày
+        </div>
+
+        <!-- Voice Settings Trigger -->
+        <div style="position: relative;">
+          <button class="icon-btn" id="voiceSettingsBtn" title="Cài đặt phát âm giọng đọc">
+            🔊
+          </button>
+          
+          <div class="settings-menu" id="settingsMenu">
+            <div class="setting-item">
+              <label for="voiceSelect">Giọng đọc tiếng Anh:</label>
+              <select id="voiceSelect"></select>
+            </div>
+            <div class="setting-item">
+              <label for="rateRange">Tốc độ đọc: <span id="rateVal">1.0x</span></label>
+              <input type="range" id="rateRange" min="0.5" max="1.3" step="0.1" value="1.0">
+            </div>
+          </div>
+        </div>
+
+        <!-- Dark / Light Mode Toggle -->
+        <button class="icon-btn" id="themeToggleBtn" title="Chuyển đổi giao diện Sáng / Tối">
+          🌙
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================================================================== -->
+    <!-- VIEW 1: DASHBOARD & TOPICS HUB                                       -->
+    <!-- ==================================================================== -->
+    <main id="dashboardView" style="display: flex; flex-direction: column; gap: 1.5rem;">
+      
+      <!-- Hero Banner -->
+      <section class="hero-banner" id="heroBanner">
+        <div class="hero-banner-left">
+          <div class="hero-tag">✨ Kho Từ Vựng Chuẩn Oxford & Cambridge</div>
+          <h2 class="hero-title">Làm Chủ <span class="gradient-text">1000 Từ Vựng</span> Tiếng Anh Theo Chủ Đề</h2>
+          <p class="hero-desc">
+            Học sâu, nhớ lâu với hệ thống 50 chủ đề thiết thực nhất từ đời sống, ẩm thực, du lịch đến công sở. Kết hợp Flashcard 3D, bài tập phát âm bản xứ, trắc nghiệm và thử thách chính tả.
+          </p>
+          <div class="hero-stats-row">
+            <div class="hero-stat-card">
+              <div class="hero-stat-val">50</div>
+              <div class="hero-stat-label">Chủ đề bài học</div>
+            </div>
+            <div class="hero-stat-card">
+              <div class="hero-stat-val">1046</div>
+              <div class="hero-stat-label">Tổng số từ vựng</div>
+            </div>
+            <div class="hero-stat-card">
+              <div class="hero-stat-val" id="heroMasteryPercent">0%</div>
+              <div class="hero-stat-label">Độ thành thạo</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-controls">
+          <button class="quick-action-btn btn-primary-action" id="btnHeroStart">
+            <span>🚀 Bắt đầu học ngay</span>
+            <span>➔</span>
+          </button>
+          <button class="quick-action-btn btn-secondary-action" id="btnHeroStarred">
+            <span>⭐ Mở Sổ tay từ khó (<span id="heroStarredCount">0</span>)</span>
+            <span>📖</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Search & Filters -->
+      <section class="controls-bar" id="controlsBar">
+        <div class="search-box-wrap">
+          <span class="search-icon-pos">🔍</span>
+          <input 
+            type="text" 
+            id="vocabSearchInput" 
+            placeholder="Tìm kiếm từ vựng (VD: parent, family, áo sơ mi, /fɑː.ðər/, ...)"
+            autocomplete="off"
+          />
+          <button class="clear-search-btn" id="clearSearchBtn">✕</button>
+        </div>
+
+        <!-- Categories Pill Bar -->
+        <nav class="category-scroll-wrap" id="categoryScroll"></nav>
+      </section>
+
+      <!-- Topics Grid -->
+      <section class="topics-grid-container" id="topicsGrid"></section>
+
+    </main>
+
+    <!-- ==================================================================== -->
+    <!-- VIEW 2: STUDY WORKSPACE                                              -->
+    <!-- ==================================================================== -->
+    <div class="study-workspace" id="studyWorkspace">
+      
+      <!-- Workspace Navigation Header -->
+      <div class="study-header">
+        <div class="study-header-left">
+          <button class="btn-back" id="btnBackToTopics">
+            <span>←</span> <span>Trở về</span>
+          </button>
+          <div class="study-topic-meta">
+            <h2><span id="studyTopicIcon">👨‍👩‍👧‍👦</span> <span id="studyTopicTitle">Gia đình</span></h2>
+            <p id="studyTopicCategory">Đời sống & Gia đình • 36 từ vựng</p>
+          </div>
+        </div>
+
+        <!-- Mode Switcher Tabs -->
+        <div class="study-mode-tabs">
+          <button class="study-tab-btn active" data-mode="flashcards">
+            <span>🃏</span> Flashcard
+          </button>
+          <button class="study-tab-btn" data-mode="quiz">
+            <span>✍️</span> Trắc nghiệm
+          </button>
+          <button class="study-tab-btn" data-mode="listening">
+            <span>🎧</span> Luyện nghe
+          </button>
+          <button class="study-tab-btn" data-mode="dictation">
+            <span>⌨️</span> Gõ chính tả
+          </button>
+          <button class="study-tab-btn" data-mode="match">
+            <span>🧩</span> Ghép từ
+          </button>
+          <button class="study-tab-btn" data-mode="list">
+            <span>📖</span> Danh sách từ
+          </button>
+        </div>
+      </div>
+
+      <!-- MODE 1: FLASHCARD CONTAINER -->
+      <div class="mode-container" id="flashcardModeContainer" style="display: flex; width: 100%;">
+        <div class="flashcard-stage">
+          
+          <div class="flashcard-progress-bar">
+            <span id="cardProgressText">1 / 20</span>
+            <div class="progress-track" style="flex: 1;">
+              <div class="progress-fill" id="cardProgressFill" style="width: 5%;"></div>
+            </div>
+          </div>
+
+          <!-- The 3D Flip Card -->
+          <div class="flashcard-container" id="flashcardElement">
+            
+            <!-- Front Face (English) -->
+            <div class="card-face card-face-front">
+              <div class="card-top-bar">
+                <span class="card-badge" id="cardTopicBadgeFront">Gia đình</span>
+                <button class="card-star-btn" id="cardStarBtnFront" title="Lưu vào sổ tay từ khó">☆</button>
+              </div>
+
+              <div class="card-center-content">
+                <h3 class="card-word" id="cardWordFront">Parent</h3>
+                <span class="card-phonetic" id="cardPhoneticFront">/'peərənt/</span>
+                <button class="audio-btn-large" id="btnCardSpeakFront" title="Nghe phát âm">🔊</button>
+              </div>
+
+              <div class="card-bottom-hint">
+                <span>🔄 Nhấn vào thẻ hoặc nhấn phím <strong>Space</strong> để xem nghĩa</span>
+              </div>
+            </div>
+
+            <!-- Back Face (Vietnamese) -->
+            <div class="card-face card-face-back">
+              <div class="card-top-bar">
+                <span class="card-badge" style="background: rgba(99, 102, 241, 0.2); color: #818cf8;">Giải nghĩa</span>
+                <button class="card-star-btn" id="cardStarBtnBack" title="Lưu vào sổ tay từ khó">☆</button>
+              </div>
+
+              <div class="card-center-content">
+                <span class="card-phonetic" id="cardPhoneticBack" style="font-size: 1rem;">/'peərənt/</span>
+                <h4 class="card-word" id="cardWordBack" style="font-size: 1.8rem; opacity: 0.85;">Parent</h4>
+                <p class="card-meaning" id="cardMeaningBack">Bố hoặc mẹ</p>
+                <button class="audio-btn-large" id="btnCardSpeakBack" title="Nghe phát âm lại">🔊</button>
+              </div>
+
+              <div class="card-bottom-hint">
+                <span>🔄 Nhấn để lật lại mặt trước</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Controls under card -->
+          <div class="card-controls">
+            <button class="nav-card-btn" id="btnPrevCard" title="Thẻ trước (Mũi tên trái)">←</button>
+            
+            <button class="btn-flashcard-action btn-card-hard" id="btnCardHard">
+              <span>⚠️ Cần ôn lại</span>
+            </button>
+            <button class="btn-flashcard-action btn-card-easy" id="btnCardEasy">
+              <span>✓ Đã thuộc</span>
+            </button>
+
+            <button class="nav-card-btn" id="btnNextCard" title="Thẻ tiếp (Mũi tên phải)">→</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MODE 2: QUIZ CONTAINER -->
+      <div class="mode-container" id="quizModeContainer" style="display: none; width: 100%;">
+        <div class="quiz-container">
+          <div class="quiz-header">
+            <span class="quiz-score-pill" id="quizProgressText">Câu 1 / 10</span>
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <span class="quiz-streak-pill" id="quizStreakVal">🔥 Chuỗi: 0</span>
+              <span class="quiz-score-pill" id="quizScoreVal">Điểm: 0</span>
+            </div>
+          </div>
+
+          <div class="quiz-prompt-box" id="quizPromptBox">
+            <span class="quiz-prompt-label">Chọn nghĩa tiếng Việt chính xác</span>
+            <div class="quiz-prompt-word" id="quizPromptWord">Mother</div>
+            <span class="card-phonetic" id="quizPromptPhonetic">/ˈmʌð.ər/</span>
+          </div>
+
+          <div class="quiz-options-grid" id="quizOptionsGrid"></div>
+        </div>
+      </div>
+
+      <!-- MODE 3: LISTENING CONTAINER -->
+      <div class="mode-container" id="listeningModeContainer" style="display: none; width: 100%;">
+        <div class="quiz-container">
+          <div class="quiz-header">
+            <span class="quiz-score-pill" id="listeningProgressText">Câu 1 / 10</span>
+            <span class="quiz-score-pill" style="color: var(--accent);">🎧 Thử thách đôi tai</span>
+          </div>
+
+          <div class="quiz-prompt-box" id="listeningAudioPrompt"></div>
+
+          <div class="quiz-options-grid" id="listeningOptionsGrid"></div>
+        </div>
+      </div>
+
+      <!-- MODE 4: DICTATION CONTAINER -->
+      <div class="mode-container" id="dictationModeContainer" style="display: none; width: 100%;">
+        <div class="dictation-container">
+          <div>
+            <span class="quiz-score-pill" id="dictationProgressText">1 / 20</span>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">Hãy gõ từ tiếng Anh tương ứng với nghĩa bên dưới:</p>
+          </div>
+
+          <h3 class="dictation-meaning-prompt" id="dictationMeaningPrompt">Bố hoặc mẹ</h3>
+          <span class="card-phonetic" id="dictationPhoneticPrompt" style="display: inline-block; margin: 0 auto;">/'peərənt/</span>
+
+          <div class="dictation-hint-letters" id="dictationHintLetters">P _ _ _ _ _</div>
+
+          <div class="dictation-input-wrap" id="dictationInputWrap">
+            <input 
+              type="text" 
+              id="dictationInput" 
+              class="dictation-input" 
+              placeholder="Gõ từ vựng tiếng Anh..." 
+              autocomplete="off" 
+              autocapitalize="off" 
+              spellcheck="false"
+            />
+            <div style="display: flex; gap: 0.75rem; width: 100%; max-width: 450px;">
+              <button class="quick-action-btn btn-secondary-action" id="btnDictationAudio" style="flex: 1; justify-content: center;">
+                🔊 Nghe phát âm
+              </button>
+              <button class="quick-action-btn btn-primary-action" id="btnCheckDictation" style="flex: 1; justify-content: center;">
+                Kiểm tra ➔
+              </button>
+            </div>
+            <div id="dictationFeedback" style="min-height: 24px; font-size: 0.95rem;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODE 5: MATCH GAME CONTAINER -->
+      <div class="mode-container" id="matchModeContainer" style="display: none; width: 100%;">
+        <div class="match-game-container">
+          <div class="match-stats-bar">
+            <div>
+              ⏱️ Thời gian: <strong id="matchTimer">00:00</strong>
+            </div>
+            <div>
+              🎯 Lượt chọn: <strong id="matchMoves">0</strong>
+            </div>
+            <button class="quick-action-btn btn-secondary-action" id="btnRestartMatch" style="padding: 0.4rem 0.85rem; font-size: 0.85rem;">
+              🔄 Chơi lại
+            </button>
+          </div>
+
+          <div class="match-grid" id="matchGrid"></div>
+        </div>
+      </div>
+
+      <!-- MODE 6: WORD EXPLORER CONTAINER -->
+      <div class="mode-container" id="listModeContainer" style="display: none; width: 100%;">
+        <div class="word-list-container" style="width: 100%;">
+          <div class="word-list-table-card">
+            <div class="word-list-row word-list-header">
+              <div>#</div>
+              <div>Từ vựng tiếng Anh</div>
+              <div class="word-col-phonetic">Phát âm</div>
+              <div>Nghĩa tiếng Việt</div>
+              <div style="text-align: right;">Lưu / Thuộc</div>
+            </div>
+            <div id="wordListTableBody"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Starred / Difficult Words Modal -->
+  <div class="modal-overlay" id="starredModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
+          ⭐ Sổ Tay Từ Khó Cần Ôn Tập
+        </h3>
+        <button class="icon-btn" id="btnCloseStarredModal" style="border: none;">✕</button>
+      </div>
+      <div class="modal-body" id="starredModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vocabulary_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
